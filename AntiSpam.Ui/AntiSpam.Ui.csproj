@@ -1,0 +1,173 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<Nullable>enable</Nullable>
+		<TargetFrameworks>net8.0-android;net8.0-ios</TargetFrameworks>
+		<OutputType>Exe</OutputType>
+		<RootNamespace>AntiSpam.Ui</RootNamespace>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<NoWarn>1701;1702</NoWarn>
+
+		<!-- Display name -->
+		<ApplicationTitle>AntiSpam</ApplicationTitle>
+
+		<!-- App Identifier -->
+		<ApplicationId>zbs.antispam</ApplicationId>
+		<ApplicationIdGuid>3778bb8f-1b59-468a-a023-08f8c7353201</ApplicationIdGuid>
+
+		<!-- Versions -->
+		<ApplicationVersion>1</ApplicationVersion>
+		<ApplicationDisplayVersion>0.1.10</ApplicationDisplayVersion>
+		<!--<ApplicationDisplayVersion Condition=" '$(BUILD_BUILDNUMBER)' == '' ">0.0</ApplicationDisplayVersion>-->
+		<!--<ApplicationDisplayVersion Condition=" '$(BUILD_BUILDNUMBER)' != '' ">$(BUILD_BUILDNUMBER)</ApplicationDisplayVersion>-->
+
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">27.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">31.0</TargetPlatformMinVersion>
+
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android|AnyCPU'">
+		<AndroidPackageFormat>apk</AndroidPackageFormat>
+		<EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
+		<AndroidLinkTool>r8</AndroidLinkTool>
+		<PublishTrimmed>True</PublishTrimmed>
+
+		<!--<AotAssemblies>True</AotAssemblies>-->
+		<!--<EnableLLVM>True</EnableLLVM>-->
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android|AnyCPU'">
+		<EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+		<AndroidKeyStore>False</AndroidKeyStore>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- App Icon -->
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appiconfg.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+
+		<!-- Splash Screen -->
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+
+		<!-- Images -->
+		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Update="Resources\Images\add.svg" TintColor="White" />
+		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
+		<MauiImage Update="Resources\Images\edit.svg" TintColor="White" />
+		<MauiImage Update="Resources\Images\incoming.svg" TintColor="White" />
+
+		<!-- Custom Fonts -->
+		<MauiFont Include="Resources\Fonts\*" />
+
+		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<!-- Android -->
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net7.0-android')) != true">
+		<Compile Remove="**\**\*.Android.cs" />
+		<None Include="**\**\*.Android.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+	</ItemGroup>
+
+	<!-- iOS -->
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net7.0-ios')) != true">
+		<Compile Remove="**\**\*.iOS.cs" />
+		<None Include="**\**\*.iOS.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Remove="Resources\AppIcon\appiconfg.svg" />
+		<None Remove="Resources\Images\Calls\blocked.svg" />
+		<None Remove="Resources\Images\Calls\incoming.svg" />
+		<None Remove="Resources\Images\Calls\missed.svg" />
+		<None Remove="Resources\Images\Calls\outgoing.svg" />
+		<None Remove="Resources\Images\Calls\rejected.svg" />
+		<None Remove="Resources\Images\Components\right.svg" />
+		<None Remove="Resources\Images\info.svg" />
+		<None Remove="Resources\Splash\add.svg" />
+		<None Remove="Resources\Splash\edit.svg" />
+	</ItemGroup>
+	<ItemGroup>
+		<MauiImage Include="Resources\Images\Calls\blocked.svg" TintColor="Red">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</MauiImage>
+		<MauiImage Include="Resources\Images\Calls\incoming.svg" TintColor="Green">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</MauiImage>
+		<MauiImage Include="Resources\Images\Calls\missed.svg" TintColor="Blue">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</MauiImage>
+		<MauiImage Include="Resources\Images\Calls\outgoing.svg" TintColor="Green">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</MauiImage>
+		<MauiImage Include="Resources\Images\Calls\rejected.svg" TintColor="Red">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</MauiImage>
+		<MauiImage Include="Resources\Images\Components\right.svg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</MauiImage>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.3" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="7.0.0" />
+		<PackageReference Include="CommunityToolkit.Maui.Markup" Version="4.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\AntiSpam.Application\AntiSpam.Application.csproj" />
+		<ProjectReference Include="..\AntiSpam.Core\AntiSpam.Core.csproj" />
+		<ProjectReference Include="..\AntiSpam.Infrastructure\AntiSpam.Infrastructure.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Components\TableViews\TableCategory.xaml.cs">
+			<DependentUpon>TableCategory.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Pages\Callers.xaml.cs">
+			<DependentUpon>Callers.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Pages\Home.xaml.cs">
+			<DependentUpon>Home.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Pages\Settings.xaml.cs">
+			<DependentUpon>Settings.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Platforms\iOS\PermissionController.cs">
+			<ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
+		</Compile>
+
+	</ItemGroup>
+
+	<ItemGroup>
+		<MauiXaml Update="Components\TableViews\TableInfo.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Components\TableViews\TableCategory.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Components\TableViews\TableSwitch.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Pages\CallerEditor.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Pages\Callers.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Pages\Settings.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+	</ItemGroup>
+
+	<ProjectExtensions>
+		<VisualStudio>
+			<UserProperties XamarinHotReloadDebuggerTimeoutExceptionAntiSpamUiHideInfoBar="True" />
+		</VisualStudio>
+	</ProjectExtensions>
+
+</Project>

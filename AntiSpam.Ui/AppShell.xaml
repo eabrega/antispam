@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="AntiSpam.Ui.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:AntiSpam.Ui.Pages"
+    xmlns:viewmodel="clr-namespace:AntiSpam.Ui.ViewModels">
+    <TabBar>
+        <ShellContent
+            Title="Главная"
+            Route="Home"
+            ContentTemplate="{DataTemplate pages:Home}" />
+        <Tab 
+            Title="Мой список"
+            Route="Callers">
+            <ShellContent 
+                Title="Все"
+                Route="All"
+                ContentTemplate="{DataTemplate pages:Callers }" />
+            <ShellContent 
+                Title="Спам"
+                Route="Black"
+                ContentTemplate="{DataTemplate pages:Callers }" />
+            <ShellContent 
+                Title="Мои номера"
+                Route="White"
+                ContentTemplate="{DataTemplate pages:Callers}" />
+        </Tab>
+        <ShellContent
+            Title="Настройки"
+            Route="Settings"
+            ContentTemplate="{DataTemplate pages:Settings}" />
+    </TabBar>
+</Shell>

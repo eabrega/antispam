@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:AntiSpam.Ui.ViewModels"
+             xmlns:custom="clr-namespace:AntiSpam.Ui.ViewModels"
+             xmlns:converter="clr-namespace:AntiSpam.Ui.ViewModels.Homes.Converters"
+             x:Class="AntiSpam.Ui.Pages.Home"
+             x:DataType="vm:HomeViewModel">
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior 
+            EventName="Appearing"
+            Command="{Binding InitCommand}" />
+    </ContentPage.Behaviors>
+    <ListView Margin="20" ItemsSource="{Binding Calls}" RowHeight="60" HasUnevenRows="False" >
+        <ListView.ItemTemplate>
+            <DataTemplate x:DataType="custom:CallItem">
+                <ViewCell>
+                    <ViewCell.View>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="9*"/>
+                                <ColumnDefinition Width="5*"/>
+                            </Grid.ColumnDefinitions>
+                            <ImageButton 
+                                Margin="10" 
+                                Source="{Binding CallType, Converter={converter:CallerTypeConverter}}" Grid.Column="0"/>
+                            <StackLayout VerticalOptions="Center" Grid.Column="1">
+                                <Label 
+                                    VerticalOptions="Center" 
+                                    Text="{Binding ., Converter={converter:ItemConverter}}" 
+                                    FontSize="Body"/>
+                                <Label 
+                                    Text="{Binding ., Converter={converter:DurationConverter}}">
+                                    <Label.Triggers>
+                                        <Trigger TargetType="Label" Property="Text" Value="">
+                                            <Setter Property="IsVisible" Value="False"></Setter>
+                                        </Trigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </StackLayout>
+                            <VerticalStackLayout VerticalOptions="Center" Grid.Column="2">
+                                    <Label Text="{Binding ., Converter={converter:DataTimeConverter}}" Padding="0,0,10,0" HorizontalTextAlignment="End"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </ViewCell.View>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</ContentPage>

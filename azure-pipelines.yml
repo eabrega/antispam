@@ -1,0 +1,61 @@
+trigger:
+- master
+
+pool:
+  #name: HOME
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  dotNetVersion: 7.x
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  projectName: 'AntiSpam.Ui'
+  group: android
+
+steps:
+- task: UseDotNet@2
+  displayName: .NET Version select
+  inputs:
+    packageType: 'sdk'
+    version: '$(dotNetVersion)'
+
+- task: CmdLine@2
+  displayName: .NET restore workload
+  inputs:
+    script: 'dotnet workload restore'
+
+- task: DownloadSecureFile@1
+  name: caCertificate
+  inputs:
+    secureFile: 'main'
+
+- task: DotNetCoreCLI@2
+  displayName: .NET Publish
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: '**/$(projectName).csproj'
+    arguments: >
+      -f net7.0-android -c $(buildConfiguration) -o $(Build.Repository.LocalPath)/drop 
+      -p:AndroidPackageFormats=apk -p:AndroidKeyStore=true -p:AndroidSigningKeyAlias=zbs.antispam.com 
+      -p:AndroidSigningKeyStore=$(caCertificate.secureFilePath) 
+      -p:AndroidSigningKeyPass=$(key-password) 
+      -p:AndroidSigningStorePass=$(key-password) 
+    zipAfterPublish: false
+    workingDirectory: '$(Build.Repository.LocalPath)/$(projectName)'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.Repository.LocalPath)/drop'
+    Contents: '**/*Signed.apk'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    CleanTargetFolder: true
+    OverWrite: true
+    flattenFolders: true
+    
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'

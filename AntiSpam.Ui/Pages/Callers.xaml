@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:AntiSpam.Ui.ViewModels"
+             xmlns:custom="clr-namespace:AntiSpam.Core.Callers;assembly=AntiSpam.Core" 
+             x:Class="AntiSpam.Ui.Pages.Callers"
+             x:DataType="viewmodel:CallersViewModel"
+             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+             Shell.NavBarIsVisible="True"
+             Title="Мой список">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Создать" IconImageSource="add.svg" Clicked="ToolbarItem_Clicked"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Image">
+                <Setter Property="Margin" Value="0, 20, 0, 20"></Setter>
+            </Style>
+            <Style x:Key="BlackList" TargetType="Entry">
+                <Setter Property="TextColor" Value="Red" />
+            </Style>
+            <Style x:Key="WhiteList" TargetType="Entry">
+                <Setter Property="TextColor" Value="Green" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ListView
+        Margin="20"
+        HasUnevenRows="False"
+        RowHeight="45"
+        ItemsSource="{Binding Callers}" 
+        ItemSelected="ListView_ItemSelected"
+        android:ListView.IsFastScrollEnabled="True">
+        <ListView.ItemTemplate>
+            <DataTemplate x:DataType="custom:Caller">
+                <ViewCell>
+                    <ViewCell.View>
+                        <Grid Padding="0" VerticalOptions="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4*"/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <StackLayout>
+                                <Label Text="{Binding PhoneNumber}" FontSize="Body" VerticalOptions="Center" />
+                                <Label 
+                                    Text="{Binding Note}"
+                                    Margin="0,5,0,0" 
+                                    TextColor="Gray"
+                                    FontSize="Small" 
+                                    MaxLines="1" 
+                                    IsVisible="{Binding Note, TargetNullValue=False}"/>
+                            </StackLayout>
+                            <Label Grid.Column="1" Text="{Binding Type}" VerticalOptions="Center">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding Type}" Value="BlackList">
+                                        <Setter Property="Style" Value="{x:StaticResource BlackList}" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Label" Binding="{Binding Type}" Value="WhiteList">
+                                        <Setter Property="Style" Value="{x:StaticResource WhiteList}" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </Grid>
+                    </ViewCell.View>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</ContentPage>

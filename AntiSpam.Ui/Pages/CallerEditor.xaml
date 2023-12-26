@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:AntiSpam.Ui.ViewModels"
+             xmlns:local="clr-namespace:AntiSpam.Ui.Pages"
+             x:Class="AntiSpam.Ui.Pages.CallerEditor"
+             x:DataType="vm:CallerEditorViewModel">
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior 
+            EventName="Appearing"
+            Command="{Binding InitCommand}" />
+    </ContentPage.Behaviors>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Image">
+                <Setter Property="Margin" Value="0, 20, 0, 20"></Setter>
+            </Style>
+            <Style x:Key="InvalidEntryStyle" TargetType="Entry">
+                <Setter Property="TextColor" Value="Red" />
+            </Style>
+            <Style x:Key="ValidEntryStyle" TargetType="Entry">
+                <Setter Property="TextColor" Value="Green" />
+            </Style>
+            <toolkit:EnumToIntConverter x:Key="EnumToIntConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Shell.TitleView>
+        <HorizontalStackLayout Margin="5" HorizontalOptions="End">
+            <Button 
+                Text="Удалить" 
+                Background="Transparent"
+                TextColor="Red"
+                FontSize="Default"  
+                FontAttributes="Bold"
+                IsVisible="{Binding IsContainsPhoneNumber}"
+                IsEnabled="{Binding IsContainsPhoneNumber}"
+                Command="{Binding DeleteCommand}"/>
+            <Button 
+                Text="Сохранить" 
+                Background="Transparent"
+                FontSize="Default"  
+                FontAttributes="Bold"
+                IsEnabled="{Binding IsValid}"
+                Command="{Binding SaveCommand}"/>
+        </HorizontalStackLayout>
+    </Shell.TitleView>
+    <ScrollView >
+        <Grid
+            RowSpacing="0"
+            Margin="30,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="190"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="4*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Image
+                Grid.Row="0"
+                Source="dotnet_bot.png" />
+            <Entry 
+                Grid.Row="1"
+                MaxLength="21"
+                Placeholder="Номер телефона"
+                Keyboard="Telephone"           
+                Text="{Binding CallerDto.Number, Mode=TwoWay}">
+                <Entry.Behaviors>
+                    <toolkit:TextValidationBehavior                        
+                        InvalidStyle="{StaticResource InvalidEntryStyle}"
+                        ValidStyle="{StaticResource ValidEntryStyle}"
+                        Flags="ValidateOnValueChanged"
+                        MinimumLength="3"
+                        MaximumLength="20">
+                    </toolkit:TextValidationBehavior>
+                </Entry.Behaviors>
+            </Entry>
+            <Picker 
+                Grid.Row="2" 
+                x:Name="picker"
+                Title="Укажите список" 
+                ItemsSource="{Binding Source={x:Static local:CallerEditor.Elements}}"
+                SelectedItem="{Binding CallerDto.Type, Mode=TwoWay}">
+                <Picker.Behaviors>
+                    <toolkit:TextValidationBehavior                        
+                        InvalidStyle="{StaticResource InvalidEntryStyle}"
+                        ValidStyle="{StaticResource ValidEntryStyle}"
+                        Flags="ValidateOnValueChanged"                      
+                        MinimumLength="1">
+                    </toolkit:TextValidationBehavior>
+                </Picker.Behaviors>
+            </Picker>
+            <Editor
+                Grid.Row="3"
+                MaxLength="500" 
+                Placeholder="Описание"
+                IsSpellCheckEnabled="True"
+                AutoSize="TextChanges"
+                Text="{Binding CallerDto.Note, Mode=TwoWay}"/>
+        </Grid>
+    </ScrollView>
+</ContentPage>

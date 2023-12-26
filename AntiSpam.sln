@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31611.283
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntiSpam.Ui", "AntiSpam.Ui\AntiSpam.Ui.csproj", "{A01BCE15-3E37-408F-A665-0DB265A7C2E4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntiSpam.Core", "AntiSpam.Core\AntiSpam.Core.csproj", "{A15D1901-9A29-4CEC-A50A-8EF68FD32D6B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntiSpam.Application", "AntiSpam.Application\AntiSpam.Application.csproj", "{7F8D50DB-9533-4DE7-8C44-7CEA1C5DD179}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5FCFE460-C21B-4C5F-AE5B-9CA8EB52FF93} = {5FCFE460-C21B-4C5F-AE5B-9CA8EB52FF93}
+		{A15D1901-9A29-4CEC-A50A-8EF68FD32D6B} = {A15D1901-9A29-4CEC-A50A-8EF68FD32D6B}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntiSpam.Infrastructure", "AntiSpam.Infrastructure\AntiSpam.Infrastructure.csproj", "{5FCFE460-C21B-4C5F-AE5B-9CA8EB52FF93}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7F709BD1-8454-4559-B244-806B662FA1B7} = {7F709BD1-8454-4559-B244-806B662FA1B7}
+		{A15D1901-9A29-4CEC-A50A-8EF68FD32D6B} = {A15D1901-9A29-4CEC-A50A-8EF68FD32D6B}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntiSpam.Database", "AntiSpam.Database\AntiSpam.Database.csproj", "{7F709BD1-8454-4559-B244-806B662FA1B7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A01BCE15-3E37-408F-A665-0DB265A7C2E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A01BCE15-3E37-408F-A665-0DB265A7C2E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A01BCE15-3E37-408F-A665-0DB265A7C2E4}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{A01BCE15-3E37-408F-A665-0DB265A7C2E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A01BCE15-3E37-408F-A665-0DB265A7C2E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A01BCE15-3E37-408F-A665-0DB265A7C2E4}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{A15D1901-9A29-4CEC-A50A-8EF68FD32D6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A15D1901-9A29-4CEC-A50A-8EF68FD32D6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A15D1901-9A29-4CEC-A50A-8EF68FD32D6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A15D1901-9A29-4CEC-A50A-8EF68FD32D6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F8D50DB-9533-4DE7-8C44-7CEA1C5DD179}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F8D50DB-9533-4DE7-8C44-7CEA1C5DD179}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F8D50DB-9533-4DE7-8C44-7CEA1C5DD179}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F8D50DB-9533-4DE7-8C44-7CEA1C5DD179}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FCFE460-C21B-4C5F-AE5B-9CA8EB52FF93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FCFE460-C21B-4C5F-AE5B-9CA8EB52FF93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FCFE460-C21B-4C5F-AE5B-9CA8EB52FF93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FCFE460-C21B-4C5F-AE5B-9CA8EB52FF93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F709BD1-8454-4559-B244-806B662FA1B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F709BD1-8454-4559-B244-806B662FA1B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F709BD1-8454-4559-B244-806B662FA1B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F709BD1-8454-4559-B244-806B662FA1B7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="AntiSpam.Ui.Components.TableViews.TableSwitch"
+             x:Name="Self">
+    <VerticalStackLayout>
+        <FlexLayout 
+            BindingContext="{x:Reference Self}"
+            JustifyContent="SpaceBetween">
+            <Label            
+                Margin="8,0,0,0" 
+                Text="{Binding Text}" 
+                VerticalOptions="Center"/>
+            <Switch             
+                IsToggled="{Binding IsToggled}"
+                OnColor="{x:StaticResource Cyan100Accent}"
+                ThumbColor="{x:StaticResource Primary}">
+                <Switch.Triggers>
+                    <Trigger TargetType="Switch" Property="IsToggled" Value="True">
+                        <Setter Property="OnColor" Value="{x:StaticResource Cyan100Accent}" />
+                        <Setter Property="ThumbColor" Value="{x:StaticResource Primary}" />
+                    </Trigger>
+                    <Trigger TargetType="Switch" Property="IsToggled" Value="False">
+                        <Setter Property="ThumbColor" Value="{x:StaticResource Gray200}" />
+                    </Trigger>
+                </Switch.Triggers>
+                <Switch.Behaviors>
+                    <toolkit:EventToCommandBehavior 
+                        EventName="Toggled"
+                        Command="{Binding Command}"
+                        CommandParameter="{Binding PayLoad}"/>
+                </Switch.Behaviors>
+            </Switch>
+        </FlexLayout>
+        <BoxView   
+            Color="Gray"  
+            Margin="0"                   
+            HeightRequest="0.2"  
+            HorizontalOptions="Fill" />
+    </VerticalStackLayout>
+</ContentView>

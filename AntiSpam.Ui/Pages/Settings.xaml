@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:AntiSpam.Ui.ViewModels.SettingsViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:local="clr-namespace:AntiSpam.Ui.Components.TableViews"
+             xmlns:perm="clr-namespace:AntiSpam.Ui.ViewModels.SettingsViewModels.Models"
+             x:DataType="vm:SettingsViewModel"
+             x:Class="AntiSpam.Ui.Pages.Settings"
+             x:Name="SettingsPage">
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior 
+            EventName="Appearing"
+            Command="{Binding InitCommand}" />
+    </ContentPage.Behaviors>
+    <ScrollView>
+        <VerticalStackLayout Margin="15" >
+            <Label 
+                TextColor="{x:StaticResource Blue100Accent}" 
+                FontSize="Medium"
+                Text="Права доступа" 
+                Padding="15, 0, 0, 0"></Label>
+            <local:TableSwitch 
+                Text="Доступ к контактам"
+                IsToggled="{Binding ContactPermission.Value, Mode=TwoWay}"     
+                PayLoad="{Binding ContactPermission}"
+                Command="{Binding ToggledCommand}">
+            </local:TableSwitch>
+            <local:TableSwitch 
+                Text="Доступ к телефону"
+                IsToggled="{Binding PhonePermission.Value, Mode=TwoWay}"     
+                PayLoad="{Binding PhonePermission}"
+                Command="{Binding ToggledCommand}">
+            </local:TableSwitch>
+            <local:TableSwitch 
+                Text="Доступ к списку звонков"
+                IsToggled="{Binding CallLogPermission.Value, Mode=TwoWay}"     
+                PayLoad="{Binding CallLogPermission}"
+                Command="{Binding ToggledCommand}">
+            </local:TableSwitch>
+            <local:TableSwitch 
+                Text="Прием входящих звонков"
+                IsToggled="{Binding IsDefaultDialler, Mode=TwoWay}"                   
+
+                Command="{Binding SetDefaultDiallerCommand}">
+            </local:TableSwitch>
+            <local:TableCategory
+                Text="Настройка уведомлений"
+                Command="{Binding ConfigureNotificationCommand}">
+            </local:TableCategory>
+            <Label Text="О программе"
+                TextColor="{x:StaticResource Blue100Accent}" 
+                Padding="15,15,0,10" 
+                FontSize="Medium"/>
+            <local:TableInfo Text="Версия" Detail="{x:Static vm:SettingsViewModel.Version }"/>
+            <local:TableInfo Text="Объем черного списка (номеров)" Detail="{Binding RowCount}"/>
+            <Button 
+                Text="Плямс" 
+                Command="{Binding SendTestNotificationCommand}" 
+                BackgroundColor="Green" 
+                Margin="0, 25, 0, 0" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
